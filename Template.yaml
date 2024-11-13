@@ -13,19 +13,20 @@ Parameters:
     Description: E-postadress som mottagare för SES-meddelanden
 
   Bucketname:
-    Default: !Sub contacts-${AWS::Region}-${AWS::AccountId}-${AWS::StackName}
-
-  Github_Reponamn:
     Type: String
-    Default: Serverless-test1
+    Default: ContactBucket20241113
+
+  GithubReponamn:
+    Type: String
+    Default: Tenta3
 
   GitHubOwner:
     Type: String
     Default: Zekath85
 
-  AWS_TOKEN:
+  AWSTOKEN:
     Type: String
-    Default: '{{resolve:secretsmanager:GITHUB_SECRET3:SecretString:Githubtoken}}'
+    Default: '{{resolve:secretsmanager:GITHUB_Secret3:SecretString:Githubtoken}}'
 
 Resources:
 
@@ -93,7 +94,7 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: SendContactInfoEmail
-      Handler: lambda_function.lambda_handler
+      Handler: index.lambda_handler
       Runtime: python3.9
       Role: !GetAtt LambdaRoleToAccessSES.Arn
       Code:
@@ -113,10 +114,10 @@ Resources:
                   {items}
                   """
               ses.send_email(
-                  Source = '!Ref Emailfrom',
+                  Source = !Ref Emailfrom,
                   Destination = {
                       'ToAddresses': [
-                          '!Ref Emailto'
+                          !Ref Emailto
                       ]
                   },
                   Message = {
@@ -313,7 +314,6 @@ Resources:
       Enabled: true
       StartingPosition: LATEST # Börjar lyssna från den senaste posten
 
-  # Lägg till behörighet för DynamoDB Streams för att trigga Lambda-funktionen
   DynamoDBStreamInvokePermission:
     Type: AWS::Lambda::Permission
     Properties:
@@ -322,7 +322,6 @@ Resources:
       Principal: dynamodb.amazonaws.com
       SourceArn: !GetAtt ContactsTable.StreamArn
 
-  # IAM Role for CodePipeline to access GitHub and S3
   CodePipelineServiceRole:
     Type: AWS::IAM::Role
     Properties:
@@ -347,17 +346,16 @@ Resources:
                   - s3:ListBucket
                   # GitHub permissions via CodePipeline source
                   - codestar-connections:UseConnection
-                Resource:
-                  - arn:aws:s3:::!Ref Bucketname/*
-                  - arn:aws:s3:::!Ref Bucketname
+                Resource: !Sub arn:aws:s3:::${S3Bucket}/*
 
-  MyPipeline:
+  # Create the CodePipeline
+  ContactPipeline:
     Type: AWS::CodePipeline::Pipeline
     Properties:
       RoleArn: !GetAtt CodePipelineServiceRole.Arn
       ArtifactStore:
         Type: S3
-        Location: !Ref Bucketname
+        Location: !Ref S3Bucket
       Stages:
         # Source Stage
         - Name: Source
@@ -367,15 +365,16 @@ Resources:
                 Category: Source
                 Owner: ThirdParty
                 Provider: GitHub
-                Version: 1
+                Version: '1'
               OutputArtifacts:
-                - Name: SourceArtifact
+                - Name: SourceOutput
               Configuration:
-                Owner: !Ref GitHubOwner
-                Repo: !Ref Github_Reponamn
-                Branch: main # or the branch you want to track
-                OAuthToken: '!Ref AWS_TOKEN'
+                Owner: !Ref GitHubOwner # GitHub username or organization
+                Repo: !Ref GithubReponamn # GitHub repository name
+                Branch: master # Branch name (e.g., "main")
+                OAuthToken: !Ref AWSTOKEN
               RunOrder: 1
+
         # Deploy Stage
         - Name: Deploy
           Actions:
@@ -388,7 +387,7 @@ Resources:
               InputArtifacts:
                 - Name: SourceOutput
               Configuration:
-                BucketName: '!Ref Bucketname'
+                BucketName: !Ref S3Bucket
                 Extract: 'true'
               RunOrder: 1
 
