@@ -1,0 +1,1 @@
+aws cloudformation create-stack --stack-name contactstack --template-body file://Template_old.yaml --capabilities CAPABILITY_NAMED_IAM
