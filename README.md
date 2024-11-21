@@ -85,5 +85,6 @@ Lösningen är byggd för att möta både skalbarhet och säkerhet och följer A
 - Ladda ner Deploy.sh, Template.yaml och Index.html.
 - Template.yaml: Ändra variablerna längst upp som passar din miljö.
 - Index.html: Se till så länken i API URL är tom, detta kommer automatiskt uppdateras när scriptet körs till API-endpoint url. "_ApiUrl = \"<>\"_"
-- Deploy.sh: Dubbelkolla variabler
+- Deploy.sh: Dubbelkolla variabler.
+- Skapa en Secret på din github. Skapa en secret på AWS (Secret manager). Variabel finns i template. Se ex: '{{resolve:secretsmanager:<Nyckelparnamn>:SecretString:<Nyckelnduvillanvända>}}'
 - Kör scriptet: Ställ terminalen där du lagt filerna och kör "./Deploy.sh".
