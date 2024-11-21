@@ -4,12 +4,12 @@ Description: Automatisera kontaktformulär med Lambda, API Gateway, DynamoDB, SE
 Parameters:
   Emailfrom:
     Type: String
-    Default: rickardhagman@gmail.com
+    Default: <Epost1>
     Description: E-postadress som SES använder för att skicka e-post
 
   Emailto:
     Type: String
-    Default: 85richag@gafe.molndal.se
+    Default: <Epost2>
     Description: E-postadress som mottagare för SES-meddelanden
 
   Bucketname:
@@ -18,15 +18,15 @@ Parameters:
 
   GithubReponamn:
     Type: String
-    Default: Tenta3
+    Default: <Ditt gitthubrep>
 
   GitHubOwner:
     Type: String
-    Default: Zekath85
+    Default: <Githubusername>
 
   AWSTOKEN:
     Type: String
-    Default: '{{resolve:secretsmanager:GITHUB_Secret3:SecretString:Githubtoken}}'
+    Default: '{{resolve:secretsmanager:GITHUB_Secret:SecretString:Githubtoken}}'
 
 Resources:
 
