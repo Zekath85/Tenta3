@@ -74,4 +74,20 @@ Lösningen prioriterar säkerhet med hjälp av AWS:s inbyggda funktioner:
 
 ---
 
+# CloudFront som förbättring
+CloudFront kan användas för att ytterligare optimera lösningen genom att tillföra följande fördelar:
+
+- **Minskad latens:** Global caching via CloudFronts edge-servrar säkerställer snabbare laddningstider för både frontend-resurser (HTML, CSS, JavaScript) och API-svar, vilket förbättrar användarupplevelsen.
+- **Avlastning av backend:** Genom att cachelagra statiska resurser och svar från API:et minskas belastningen på S3, Lambda och API Gateway.
+- **Integrerad säkerhet:**
+  - Stöd för AWS Web Application Firewall (WAF) för skydd mot vanliga hot som SQL-injektion och bot-trafik.
+  - HTTPS-stöd via ACM (Amazon Certificate Manager) säkerställer säkra anslutningar.
+  - Skydd mot DDoS-attacker genom integration med AWS Shield.
+- **Global distribution:** Optimerar användarupplevelsen för en global publik genom att använda servrar närmare användarna.
+
+---
+
+Genom att inkludera CloudFront i lösningen kan applikationen göras ännu mer skalbar, säker och prestandaeffektiv, särskilt vid hög trafik eller en global användarbas.
+
+
 Lösningen är byggd för att möta både skalbarhet och säkerhet och följer AWS:s bästa praxis. Den kan vidareutvecklas för global tillgänglighet och ännu högre skyddsnivåer.
