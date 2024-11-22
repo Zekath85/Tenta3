@@ -3,6 +3,8 @@
 Denna uppgift handlar om att skapa en **skalbar**, serverlös värdmiljö för en webbapplikation med AWS-tjänster.
 Lösningen är byggd med **AWS CloudFormation** och inkluderar följande:
 
+![image](https://github.com/user-attachments/assets/5f0ab081-33e0-45fa-99d2-844f07b84da3)
+
 ## **Huvudkomponenter**
 - **Amazon DynamoDB**: Lagrar kontaktinformation från användare.
 - **AWS Lambda**: Bearbetar data och integrerar mellan tjänster:
