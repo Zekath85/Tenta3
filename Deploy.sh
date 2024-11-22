@@ -24,7 +24,7 @@ fi
 echo "API URL: $API_URL"
 
 # Uppdatera index.html med API URL
-sed -i "s|ApiUrl = \"<API_ENDPOINT>\"|ApiUrl = \"$API_URL\"|g" "$INDEX_FILE"
+sed -i "s|ApiUrl = \"<>\"|ApiUrl = \"$API_URL\"|g" "$INDEX_FILE"
 
 # Kontrollera om det finns ändringar att commit:a
     git status
