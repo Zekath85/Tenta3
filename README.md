@@ -5,7 +5,7 @@ Lösningen är byggd med **AWS CloudFormation** och inkluderar följande:
 
 ![image](https://github.com/user-attachments/assets/5f0ab081-33e0-45fa-99d2-844f07b84da3)
 
-## **Huvudkomponenter**
+## **Komponenter**
 - **Amazon DynamoDB**: Lagrar kontaktinformation från användare.
 - **AWS Lambda**: Bearbetar data och integrerar mellan tjänster:
   - `AddContactInfo`: Lagrar användardata till DynamoDB.
@@ -79,9 +79,7 @@ Lösningen prioriterar säkerhet med hjälp av AWS:s inbyggda funktioner:
 ---
 
 Genom att inkludera CloudFront i lösningen kan applikationen göras ännu mer skalbar, säker och prestandaeffektiv, särskilt vid hög trafik eller en global användarbas.
-
-
-Lösningen är byggd för att möta både skalbarhet och säkerhet och följer AWS:s bästa praxis. Den kan vidareutvecklas för global tillgänglighet och ännu högre skyddsnivåer.
+Lösningen kan vidareutvecklas och få ännu högre skyddsnivåer.
 
 # Att använda Scriptet:
 - Ladda ner Deploy.sh, Template.yaml och Index.html.
